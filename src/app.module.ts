@@ -10,13 +10,12 @@ import { RoleModule } from './role/role.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { database_config } from './config/database.config';
 import { CategoryModule } from './category/category.module';
-import { PostImageModule } from './post-image/post-image.module';
 import { TagsModule } from './tags/tags.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(database_config),
-  ConfigModule.forRoot(), AuthModule, UsersModule, PostModule, CommentModule, RoleModule, CategoryModule, PostImageModule, TagsModule],
+  ConfigModule.forRoot(), AuthModule, UsersModule, PostModule, CommentModule, RoleModule, CategoryModule, TagsModule],
   controllers: [AppController],
   providers: [AppService],
 })

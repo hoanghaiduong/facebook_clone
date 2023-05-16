@@ -25,7 +25,6 @@ export class PostService {
       ...createPostDto,
       category,
       user,
-      images: null,
       comments: null,
     })
 

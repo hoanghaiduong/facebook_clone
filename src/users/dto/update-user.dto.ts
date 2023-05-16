@@ -26,10 +26,7 @@ export class UpdateUserDto {
     })
     phoneNumber: string;
 
-    @ApiProperty({
-        example: "email@gmail.com"
-    })
-    email: string;
+   
 
     sign_in_provider: string;
 

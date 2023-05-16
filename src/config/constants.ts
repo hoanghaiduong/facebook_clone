@@ -1,7 +1,6 @@
 import * as dotenv from 'dotenv';
 import { Category } from 'src/category/entities/category.entity';
 import { Comment } from 'src/comment/entities/comment.entity';
-import { PostImage } from 'src/post-image/entities/post-image.entity';
 import { Post } from 'src/post/entities/post.entity';
 import { Role } from 'src/role/entities/role.entity';
 
@@ -23,7 +22,6 @@ const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
 const ENTITIES = [
     User,
     Post,
-    PostImage,
     Comment,
     Role,
     Category

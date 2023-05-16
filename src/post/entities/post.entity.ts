@@ -1,6 +1,5 @@
 import { Category } from 'src/category/entities/category.entity';
 import { Comment } from 'src/comment/entities/comment.entity';
-import { PostImage } from 'src/post-image/entities/post-image.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { POST_TYPE } from '../enum/post_type.enum';
@@ -42,8 +41,6 @@ export class Post {
     })
     type: POST_TYPE;
 
-    @OneToMany(() => PostImage, postimage => postimage.image)
-    images: PostImage[];
     @ManyToOne(() => User, user => user.posts)
     user: User;
 

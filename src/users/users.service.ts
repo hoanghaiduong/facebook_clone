@@ -66,7 +66,8 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User | any> {
-    const userFirebase = await defaultAuth.getUser(id);
+    try {
+      const userFirebase = await defaultAuth.getUser(id);
     if (!userFirebase) {
       throw new NotFoundException("USER NOT FOUND");
 
@@ -91,6 +92,9 @@ export class UsersService {
       throw new BadRequestException("UPDATE FAILED")
     }
     return merged;
+    } catch (error) {
+        throw new BadRequestException(error.message)
+    }
 
   }
 

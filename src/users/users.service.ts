@@ -68,47 +68,56 @@ export class UsersService {
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User | any> {
     try {
       const userFirebase = await defaultAuth.getUser(id);
-    if (!userFirebase) {
-      throw new NotFoundException("USER NOT FOUND");
+      if (!userFirebase) {
+        throw new NotFoundException("USER NOT FOUND");
 
-    }
-    const user = await this.findOne(id);
-    //update with firebase
-    var url = updateUserDto.avatar;
-    var isURL = /^https?:\/\//i.test(url);
-    const updateFirebase = await defaultAuth.updateUser(user.id, {
-      displayName: updateUserDto.displayName,
-      emailVerified: updateUserDto.email_verified,
-      phoneNumber: updateUserDto.phoneNumber,
-      disabled: updateUserDto.disabled,
-      photoURL: isURL ? url : userFirebase.photoURL || "https://static.vecteezy.com/system/resources/previews/009/734/564/original/default-avatar-profile-icon-of-social-media-user-vector.jpg",
-    });
-    if (!updateFirebase) {
-      throw new BadRequestException("UPDATE FAILED IN FIREBASE")
-    }
-    const merged = this.userRepository.merge(user, updateUserDto);
-    const updatedUser = await this.userRepository.update(id, merged);
-    if (!updatedUser) {
-      throw new BadRequestException("UPDATE FAILED")
-    }
-    return merged;
+      }
+      const user = await this.findOne(id);
+      //update with firebase
+      var url = updateUserDto.avatar;
+      var isURL = /^https?:\/\//i.test(url);
+      const updateFirebase = await defaultAuth.updateUser(user.id, {
+        displayName: updateUserDto.displayName,
+        emailVerified: updateUserDto.email_verified,
+        phoneNumber: updateUserDto.phoneNumber,
+        disabled: updateUserDto.disabled,
+        photoURL: isURL ? url : userFirebase.photoURL || "https://static.vecteezy.com/system/resources/previews/009/734/564/original/default-avatar-profile-icon-of-social-media-user-vector.jpg",
+      });
+      if (!updateFirebase) {
+        throw new BadRequestException("UPDATE FAILED IN FIREBASE")
+      }
+      const merged = this.userRepository.merge(user, updateUserDto);
+      const updatedUser = await this.userRepository.update(id, merged);
+      if (!updatedUser) {
+        throw new BadRequestException("UPDATE FAILED")
+      }
+      return merged;
     } catch (error) {
-        throw new BadRequestException(error.message)
+      throw new BadRequestException(error.message)
     }
 
   }
 
   async remove(id: string) {
-    const userDB = await this.findOne(id);
-    const userFB = await this.authService.findOneByUID(id);
-    if (!userFB) {
-      throw new NotFoundException("USER NOT FOUND ! DELETE FAILED")
-    }
-    await defaultAuth.deleteUser(id);
-    await this.userRepository.delete(userDB);
-    return {
-      status: 200,
-      message: "User deleted successfully"
+    try {
+      const userDB = await this.findOne(id);
+      const userFB = await this.authService.findOneByUID(id);
+      if (!userFB) {
+        throw new NotFoundException("USER NOT FOUND ! DELETE FAILED")
+      }
+
+      await defaultAuth.deleteUser(id).then(async () => {
+        await this.userRepository.delete(id).then(() => {
+
+        })
+      })
+
+      return {
+        status: 200,
+        message: "User deleted successfully"
+      }
+    } catch (error) {
+      throw new BadRequestException(error.message)
     }
 
   }

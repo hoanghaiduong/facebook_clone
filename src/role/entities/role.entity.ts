@@ -7,7 +7,7 @@ export class Role {
     id: string;
     @Column()
     name: string;
-    @ManyToMany(() => User, user => user.roles, { onDelete:'CASCADE',onUpdate:'CASCADE'  })
+    @ManyToMany(() => User, user => user.roles, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     users: User[];
-    
+
 }

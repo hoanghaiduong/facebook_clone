@@ -36,6 +36,7 @@ export class UsersService {
       const creating = this.userRepository.create({
         id: createUserFirebase.uid,
         email: createUserFirebase.email,
+        displayName: createUserFirebase.displayName,
         roles
       })
       const savedUserDB = await this.userRepository.save(creating);

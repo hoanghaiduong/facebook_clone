@@ -1,0 +1,7 @@
+export enum POST_TYPE {
+    TRENDING="TRENDING",
+    FEATURED="FEATURED",
+    HOT="HOT",
+    POPULAR="POPULAR",
+    NEWS="NEWS",
+}

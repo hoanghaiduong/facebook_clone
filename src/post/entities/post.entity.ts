@@ -2,7 +2,6 @@ import { Category } from 'src/category/entities/category.entity';
 import { Comment } from 'src/comment/entities/comment.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { POST_TYPE } from '../enum/post_type.enum';
 
 
 @Entity()
@@ -23,7 +22,11 @@ export class Post {
         nullable: true
     })
     photo: string;
-
+    @Column({
+        type: 'json',
+        nullable: true
+    })
+    images: any[];
     @Column({
         nullable: true,
         default: 0
@@ -37,10 +40,34 @@ export class Post {
 
     @Column({
         nullable: true,
-        default: POST_TYPE.NEWS
+        default: true
     })
-    type: POST_TYPE;
-
+    isFeatured: boolean;
+    @Column({
+        nullable: true,
+        default: true
+    })
+    isTrending: boolean;
+    @Column({
+        nullable: true,
+        default: true
+    })
+    isPopular: boolean;
+    @Column({
+        nullable: true,
+        default: true
+    })
+    isHot: boolean;
+    @Column({
+        nullable: true,
+        default: true
+    })
+    isNews: boolean;
+    @Column({
+        nullable: true,
+        default: true
+    })
+    isFavourite: boolean;
     @ManyToOne(() => User, user => user.posts)
     user: User;
 

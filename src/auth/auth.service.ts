@@ -61,7 +61,8 @@ export class AuthService {
     const userDB = await this.usersService.findOne({
       where: {
         id: user.uid,
-      }
+      },
+      relations:["roles"]
     });
     let savedUser;
     if (user && !userDB) {

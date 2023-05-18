@@ -11,11 +11,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { database_config } from './config/database.config';
 import { CategoryModule } from './category/category.module';
 import { TagsModule } from './tags/tags.module';
-
+import { FilesModule } from './files/files.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(database_config),
-  ConfigModule.forRoot(), AuthModule, UsersModule, PostModule, CommentModule, RoleModule, CategoryModule, TagsModule],
+    ConfigModule.forRoot(), AuthModule, UsersModule, PostModule, CommentModule, RoleModule, CategoryModule, TagsModule, FilesModule],
   controllers: [AppController],
   providers: [AppService],
 })
